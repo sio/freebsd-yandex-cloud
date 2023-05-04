@@ -1,5 +1,5 @@
 PACKER?=packer
-TEMPLATE?=Freebsd.pkr.hcl
+TEMPLATE?=FreeBSD.pkr.hcl
 
 ifneq (,$(VERSION))
 PACKER_OPTIONS+=-var 'freebsd_version=$(VERSION)'
