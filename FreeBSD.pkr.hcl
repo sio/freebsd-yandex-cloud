@@ -17,7 +17,7 @@ data "http" "freebsd_baseimg_checksum_file" {
 }
 
 source "qemu" "freebsd_vm" {
-  iso_urls = [
+  iso_urls = [ // unpacking xz archive is mind bogglingly slow, and single-threaded
     "./FreeBSD-${var.freebsd_version}-amd64.qcow2.xz",
     local.freebsd_baseimg_url
   ]
