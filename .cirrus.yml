@@ -16,13 +16,12 @@ task:
         qemu-kvm
         unzip
     - wget "$PACKER_URL" -O /tmp/packer.zip --no-verbose
-    - cd /usr/local/bin
-    - unzip -v /tmp/packer.zip
+    - cd /usr/local/bin && unzip /tmp/packer.zip
     - ls -lh /usr/local/bin
     - packer --version
 
   build_script:
-    - make build VERSION=13.2-RELEASE
+    - make build VERSION=13.2-STABLE
 
   always:
     console_log_script:
