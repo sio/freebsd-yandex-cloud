@@ -26,7 +26,7 @@ upload:
 ifeq (,$(S3_BUCKET))
 	$(error Variable not defined: S3_BUCKET)
 endif
-	$(S3) cp images/freebsd.qcow2 $(S3_PATH)
+	$(S3) cp images/freebsd.qcow2 $(S3_PATH) --only-show-errors
 
 .PHONY: console
 console:
