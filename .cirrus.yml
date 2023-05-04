@@ -7,6 +7,7 @@ task:
 
   env:
     PACKER_URL: https://releases.hashicorp.com/packer/1.8.6/packer_1.8.6_linux_amd64.zip
+    PATH: ${PATH}:/usr/local/bin
 
   prepare_script:
     - apt-get update
@@ -17,6 +18,7 @@ task:
     - wget "$PACKER_URL" -O /tmp/packer.zip --no-verbose
     - cd /usr/local/bin
     - unzip -v /tmp/packer.zip
+    - ls -lh /usr/local/bin
     - packer --version
 
   build_script:
