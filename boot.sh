@@ -11,4 +11,4 @@ qemu-system-x86_64 \
     -device virtio-net,netdev=user.0 \
     -vnc 127.0.0.1:99 \
     -netdev user,id=user.0,hostfwd=tcp::4040-:5985,hostfwd=tcp::4041-:3389
-
+    -serial "mon:telnet:127.0.0.1:2121,server,nowait,logfile=console.log,logappend=on"
