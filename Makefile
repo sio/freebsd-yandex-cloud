@@ -27,3 +27,7 @@ ifeq (,$(S3_BUCKET))
 	$(error Variable not defined: S3_BUCKET)
 endif
 	$(S3) cp images/freebsd.qcow2 $(S3_PATH)
+
+.PHONY: console
+console:
+	socat file:`tty`,raw,echo=0 TCP-CONNECT:localhost:2121
