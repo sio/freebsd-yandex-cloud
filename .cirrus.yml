@@ -19,7 +19,7 @@ task:
     - packer --version
 
   build_script:
-    - make build
+    - make build VERSION=13.2-RELEASE
 
   always:
     console_log_script:
