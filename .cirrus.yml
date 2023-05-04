@@ -13,7 +13,8 @@ task:
     - apt-get update
     - apt-get install -y --no-install-recommends
         libguestfs-tools
-        qemu-kvm
+        make
+        qemu-system-x86
         unzip
     - wget "$PACKER_URL" -O /tmp/packer.zip --no-verbose
     - cd /usr/local/bin && unzip /tmp/packer.zip
