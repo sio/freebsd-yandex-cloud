@@ -1,9 +1,13 @@
 PACKER?=packer
 TEMPLATE?=Freebsd.pkr.hcl
 
+ifneq (,$(VERSION))
+PACKER_OPTIONS+=-var 'freebsd_version=$(VERSION)'
+endif
+
 .PHONY: build fmt
 build fmt:
-	$(PACKER) $@ $(TEMPLATE)
+	$(PACKER) $@ $(PACKER_OPTIONS) $(TEMPLATE)
 
 .PHONY: boot
 boot:
