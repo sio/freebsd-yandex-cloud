@@ -9,8 +9,8 @@ task:
     PACKER_URL: https://releases.hashicorp.com/packer/1.8.6/packer_1.8.6_linux_amd64.zip
 
   prepare_script:
-    - sudo apt-get update
-    - sudo apt-get install -y --no-install-recommends
+    - apt-get update
+    - apt-get install -y --no-install-recommends
         libguestfs-tools
         qemu-kvm
     - wget "$PACKER_URL" -O /tmp/packer.zip
