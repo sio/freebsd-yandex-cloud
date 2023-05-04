@@ -1,0 +1,22 @@
+task:
+  name: ci/build
+
+  container:
+    image: debian:11
+    kvm: true
+
+  env:
+    PACKER_URL: https://releases.hashicorp.com/packer/1.8.6/packer_1.8.6_linux_amd64.zip
+
+  prepare_script:
+    - sudo apt-get update
+    - sudo apt-get install -y --no-install-recommends
+        libguestfs-tools
+        qemu-kvm
+    - wget "$PACKER_URL" -O /tmp/packer.zip
+    - cd /usr/local/bin
+    - unzip -v /tmp/packer.zip
+    - packer --version
+
+  build_script:
+    - make build
