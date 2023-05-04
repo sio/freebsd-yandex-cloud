@@ -16,16 +16,8 @@ data "http" "freebsd_baseimg_checksum_file" {
   url = "https://download.freebsd.org/ftp/snapshots/VM-IMAGES/${var.freebsd_version}/amd64/Latest/CHECKSUM.SHA512"
 }
 
-local "yandex_image_name" {
-  expression = "freebsd-${split(".", var.freebsd_version)[0]}"
-}
-
-build {
-  sources = ["source.qemu.freebsd_cloud"]
-}
-
-source "qemu" "freebsd_cloud" {
-  iso_urls      = [
+source "qemu" "freebsd_vm" {
+  iso_urls = [
     "./FreeBSD-${var.freebsd_version}-amd64.qcow2.xz",
     local.freebsd_baseimg_url
   ]
@@ -46,6 +38,33 @@ source "qemu" "freebsd_cloud" {
   disk_discard       = "unmap"
   disk_detect_zeroes = "unmap"
 
-  ssh_username = "root"
-  ssh_timeout = "5m"
+  boot_wait = "55s"
+  boot_command = [
+    "root<enter>",
+    "chpass -p '$1$freebsd$XeVNrIF0QBHSJsEeU14jC/'<enter>",      // unsafe
+    "echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config<enter>", // unsafe
+    "sysrc sshd_enable=YES<enter>",
+    "service sshd start<enter>",
+  ]
+
+  ssh_username     = "root"
+  ssh_password     = "freebsd"
+  ssh_timeout      = "25m"
+  shutdown_command = "shutdown -p now"
+
+  qemuargs = [
+    ["-serial", "mon:telnet:127.0.0.1:2121,server,nowait,logfile=console.log,logappend=on"],
+  ]
+}
+
+build {
+  sources = ["source.qemu.freebsd_vm"]
+
+  provisioner "shell" {
+    execute_command = "chmod +x {{ .Path }}; env {{ .Vars }} {{ .Path }}"
+    scripts = [
+      "cloud.sh",
+      "cleanup.sh",
+    ]
+  }
 }
