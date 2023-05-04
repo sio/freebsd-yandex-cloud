@@ -1,5 +1,5 @@
 PACKER?=packer
-TEMPLATE?=freebsd.pkr.hcl
+TEMPLATE?=Freebsd.pkr.hcl
 
 .PHONY: build fmt
 build fmt:
