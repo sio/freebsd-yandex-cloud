@@ -16,3 +16,14 @@ boot:
 .PHONY: clean
 clean:
 	$(RM) -rv images/
+
+.PHONY: upload
+upload: export AWS_ENDPOINT=https://storage.yandexcloud.net
+upload: export AWS_EC2_METADATA_DISABLED=true
+upload: S3=aws s3 --endpoint-url=$(AWS_ENDPOINT)
+upload: S3_PATH=s3://$$S3_BUCKET/freebsd.qcow2
+upload:
+ifeq (,$(S3_BUCKET))
+	$(error Variable not defined: S3_BUCKET)
+endif
+	$(S3) cp images/freebsd.qcow2 $(S3_PATH)

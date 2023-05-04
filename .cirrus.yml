@@ -9,9 +9,14 @@ task:
     PACKER_URL: https://releases.hashicorp.com/packer/1.8.6/packer_1.8.6_linux_amd64.zip
     PATH: ${PATH}:/usr/local/bin
 
+    AWS_ACCESS_KEY_ID: ENCRYPTED[4e28a196b6d437528bb2e4946c97065ffa8927d180c477e932747697355550c320c08d3147924847f28d489400015bc1]
+    AWS_SECRET_ACCESS_KEY: ENCRYPTED[7d14ae4a491073f0e5090820c055c9463c888648dee3eb86f8dfb3cd1db4b01a500d69ea82c6eaef1df3da96f82412b0]
+    S3_BUCKET: ENCRYPTED[183b2d4b46d0baef0e4fd05f01740f4adca34a9b8881b00655840ed39a1884273a8ad31041faa7f6ed3dce4043e6bef5]
+
   prepare_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
+        awscli
         libguestfs-tools
         make
         qemu-system-x86
@@ -27,3 +32,8 @@ task:
   always:
     console_log_script:
       - cat console.log || true
+
+  upload_script:
+    - if [[ "$CIRRUS_BRANCH" = "main" ]]; then
+      make upload;
+      fi
