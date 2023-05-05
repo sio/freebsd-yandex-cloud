@@ -1,3 +1,34 @@
+# ARCHIVE OF AN UNFINISHED PROJECT
+
+> I spent a day playing with FreeBSD image building because I was appaled by
+> the fact that the only FreeBSD templates readily available on Yandex Cloud
+> are provided by a third party for an extra price of 7200 RUB/mo (close to
+> $100/mo), and that's on top of any compute costs required to run them.
+>
+> The project was moderately fun but not very educational, all the tools used
+> were not new to me. I also have no real need for FreeBSD instances in Yandex
+> Cloud, so it's not rational for me to keep pouring effort into this.
+>
+> Current state of the project is far from ready:
+>   - Images get built fine, but the build process is incredibly slow because
+>     of single threaded xz unarchiving
+>   - Serial console is not properly enabled at startup
+>   - Cloud-init is installed but fails to pick up Yandex Cloud datasource,
+>     further troubleshooting was not attempted because of the previous two
+>     points
+>
+> There are many similar projects by more driven and competent authors, you
+> should probably use of of those:
+>   - [virt-lightning/freebsd-cloud-images](https://github.com/virt-lightning/freebsd-cloud-images)
+>     (published at [bsd-cloud-image.org](https://bsd-cloud-image.org/))
+>   - [thome/freebsd-cloud-image](https://gitlab.inria.fr/thome/freebsd-cloud-image)
+>
+> In general, building VM images from scratch seems to be a better path
+> because all speed improvements from a shorter build process are lost on xz
+> unarchiving.
+
+---
+
 # FreeBSD images for Yandex Cloud
 
 This project contains build scripts and surrounding configuration for
